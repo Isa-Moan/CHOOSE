@@ -23,47 +23,52 @@
             height: 300px;
             flex: 1 1 35%; /* Los iframes ocuparán un mínimo del 45% del ancho del contenedor */
         }
+        /* Estilos para resaltar solo con color de texto */
+        .highlight {
+            color: red; /* Cambia esto al color que desees */
+            font-weight: bold; /* Puedes hacerlo opcional */
+        }
     </style>
 </head>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-black">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="index.html">CHOOSE</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="Historia.html">Historia</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="Videos.html">Videos</a>
-              </li>
-    
-              <li class="nav-item">
-                <a class="nav-link" href="Alimentacion.html">Alimentacion</a>
-              </li>          
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: purple; color: white;">
-                    Mas
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Actividad fisica</a></li>
-                    <li><a class="dropdown-item" href="#">Precauciones</a></li>
-                </ul>
-            </li>
-            
+<nav class="navbar navbar-expand-lg navbar-dark bg-black">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">CHOOSE</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="Historia.html">Historia</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Videos.html">Videos</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="Alimentacion.html">Alimentacion</a>
+          </li>          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: purple; color: white;">
+                Mas
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="ActividadFisica.html">Actividad fisica</a></li>
+                <li><a class="dropdown-item" href="Precauciones.html">Precauciones</a></li>
             </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="..." aria-label="search">
-              <button class="btn" type="submit" style="border-color: #641313; background-color: #641d5b; color: rgb(255, 255, 255);">
-                Buscar
-            </button>
-            
-            </form>
-          </div>
-        </div>
-      </nav>
+        </li>
+        
+        </ul>
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="text" id="searchInput" placeholder="...">
+          <button class="btn" type="button" style="border-color: #641313; background-color: #641d5b; color: rgb(255, 255, 255);" onclick="buscarEnPagina()">
+            Buscar
+        </button>
+        
+        </form>
+      </div>
+    </div>
+  </nav>
       <body>
         <div class="video-container">
             <iframe width="560" height="315" src="https://www.youtube.com/embed/M2GDd7jyzOA?si=89ZSTTNEBiHzKn8d" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -81,33 +86,68 @@
 
             <iframe width="560" height="315" src="https://www.youtube.com/embed/DsvJ7iv_d7Y?si=oAb2Rusj9gL-EBXD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+        <script>
+            function buscarEnPagina() {
+                // Obtener el valor de búsqueda del campo de entrada
+                var searchValue = document.getElementById('searchInput').value.toLowerCase();
+                
+                // Obtener todos los elementos de texto donde realizar la búsqueda
+                var paragraphs = document.getElementsByTagName('p');
+        
+                // Eliminar cualquier resaltado anterior
+                for (var i = 0; i < paragraphs.length; i++) {
+                    paragraphs[i].innerHTML = paragraphs[i].innerHTML.replace(/<span class="highlight">|<\/span>/g, "");
+                }
+        
+                // Si el campo de búsqueda no está vacío
+                if (searchValue) {
+                    // Recorrer todos los párrafos y realizar la búsqueda
+                    for (var i = 0; i < paragraphs.length; i++) {
+                        var paragraph = paragraphs[i];
+                        var content = paragraph.innerHTML;
+        
+                        // Crear una expresión regular para buscar el término, sin distinguir entre mayúsculas y minúsculas
+                        var regExp = new RegExp(searchValue, "gi");
+        
+                        // Reemplazar los términos encontrados con un resaltado de color
+                        var newContent = content.replace(regExp, function(matchedText) {
+                            return '<span class="highlight">' + matchedText + '</span>';
+                        });
+        
+                        // Actualizar el contenido del párrafo con el texto resaltado
+                        paragraph.innerHTML = newContent;
+                    }
+                }
+            }
+        </script>
+        
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
             <!--Este es mi pie de pagina-->
-    <div class="card text-center">
-        <div class="card-header">
-            <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="active-tab" data-bs-toggle="tab" href="#active" role="tab" aria-controls="active" aria-selected="true">Acerca</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="link-tab" data-bs-toggle="tab" href="#link" role="tab" aria-controls="link" aria-selected="false">Contactos</a>
-                </li>
-            </ul>
-        </div>
-        <div class="card-body text-dark">
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
-                    <h5 class="card-title">CHOOSE </h5>
-                    <p class="card-text">Copyright &copy; 2024 por ISABEL MOLLERICONA</p>
+            <div class="card text-center">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="active-tab" data-bs-toggle="tab" href="#active" role="tab" aria-controls="active" aria-selected="true">Acerca</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="link-tab" data-bs-toggle="tab" href="#link" role="tab" aria-controls="link" aria-selected="false">Contactos</a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="tab-pane fade" id="link" role="tabpanel" aria-labelledby="link-tab">
-                    <!-- Aquí va el nuevo QR generado -->
-                    <img src="img/tu_codigo_qr.jpg" class="card-img-top" alt="QR WhatsApp" style="width: 200px; height: 200px;">
-                    <p class="card-text">74670127</p>
+                <div class="card-body text-dark">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
+                            <h5 class="card-title">CHOOSE</h5>
+                            <p class="card-text">Copyright &copy; 2024 por ISABEL MOLLERICONA</p>
+                        </div>
+                        <div class="tab-pane fade" id="link" role="tabpanel" aria-labelledby="link-tab">
+                            <a href="https://wa.me/59174670127?text=Hola...%20¿cual%20es%20tu%20duda?" target="_blank">
+                                <!-- Reemplazar la siguiente línea con el enlace a tu imagen QR -->
+                                <img src="img/photo_2024-09-17_15-33-36.jpg" alt="Código QR de WhatsApp" style="width:150px;height:150px;">
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 </body>
 </html>
